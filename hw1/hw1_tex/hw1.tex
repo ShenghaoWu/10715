@@ -1,0 +1,61 @@
+\newpage
+\section{Perceptron Algorithm}
+
+
+Consider a classification problem where we have features $\mathbf{x}_{i}\in \mathbb{R}^{d}$, and labels $y_{i}\in \{-1, +1\}$ for samples $i \in [n]$. Let $\mathcal{H} = \{ \mathbf{x} \mapsto \text{sign}(\mathbf{w}^\top \mathbf{x}+b): \mathbf{w} \in \mathbb{R}^d \}$ and $b\in \mathbb{R}$ be our hypothesis class with weights $\mathbf{w}$ and bias $b$. You will implement the perceptron:\\
+
+\begin{algorithm}[H]
+\SetAlgoLined
+Initialize parameters $\mathbf{w}_{0}=0$, $b_{0}=0$, step $t=0$\;
+ \While{$\exists i\in [n]$ such that $y_{i}(\mathbf{w}^\top \mathbf{x}_{i} + b)\leq 0$}{
+   $\mathbf{w}_{t+1}=\mathbf{w}_{t}+y_{i}\mathbf{x}_{i}$\;
+   $b_{t+1}=b_{t}+y_{i}$\;
+   $t=t+1$\;
+ }
+ Output $\mathbf{w}_t$ and $b_t$
+ \caption{Perceptron algorithm}
+\end{algorithm}
+
+\subsection{MNIST Binary Classification Data [20 points]}
+
+The first part of the assignment will be to prepare data from the MNIST database of handwritten digits. The output of this part of the homework will only be the plots of the training data. For this assignment you will use \textcolor{blue}{python3} in particular the \textcolor{blue}{numpy} and \textcolor{blue}{matplotlib} libraries.\\
+
+We recommend you to use the functions available at \textcolor{blue}{data.py}.
+
+\begin{enumerate}[(a)]
+    \item Download the MNIST database available at this url: \url{http://yann.lecun.com/exdb/mnist/}, make sure to download the four files corresponding to train and test features labels.
+    \item Write a function to filter the datasets to only keep  the examples associated with the \textcolor{blue}{threes} and \textcolor{blue}{eights}. This function must also keep only the first \textcolor{blue}{500} examples of the train and \textcolor{blue}{500} of the test dataset.
+    \item (10 points) After you filtered, plot a grid of 5x5 images of the training data and report.
+    \item Transform the feature data from images of 28x28 to flattened vectors of 784 entries, we will refer to this number as $d$ the dimension of the features.
+    \item (10 points) Plot a histogram to show the amount of threes and eights in the training data.
+    \item Transform the label data from the integer labels 3 and 8 to -1, +1 respectively so that you can later use directly in the perceptron algorithm.
+\end{enumerate}
+
+For this part of the homework you will only need to report the image grid and the histogram plots items (c) and (e) in your pdf submission.
+
+\newpage
+\subsection{Perceptron Algorithm [80 points]}
+
+In this part of the homework you will complete the perceptron class provided to you in \textcolor{blue}{perceptron.py} by coding the methods: update, train and predict. After this you will record the performance of the perceptron algorithm in the MNIST binary classification data you constructed above \textbf{(with the \textcolor{blue}{500 train and 500 test})}.
+
+\begin{enumerate}[(a)]
+    \item (10 points) Complete the predict method which computes the perceptron predictions, it receives the features $\mathbf{X} \in \mathbb{R}^{nxd}$, and outputs its predictions $\hat{y}\in\mathbb{R}^{n}$.
+    
+    \item (10 points) Complete the update method which updates the weights $\mathbf{w}$ and bias $b$ of the classifier, it receives the features of a single example $\mathbf{x} \in \mathbb{R}^{d}$ its label $y\in\{-1,+1\}$.
+
+    \item (30 points) Complete the train method which receives the train and test data and execute the perceptron algorithm for 2000 iterations. \textit{Hint: This method will be evaluated using the Autograder on linearly separable data (not MNIST), check that your perceptron can perfectly classify data with this property}.
+    
+    \item (20 points) Use the trajectories attribute from the perceptron class that stores the train and test accuracy of the perceptron algorithm when you execute the train method. Plot the trajectories and the final train accuracy and test accuracy.
+    
+    \item (10 points) Describe the plot of the train and test accuracy trajectories, in particular explain the difference between the two trajectories, provide your ideas on the origin of the generalization gap.
+\end{enumerate}
+
+The perceptron class will be graded through \textbf{Gradescope's Autograder}. This Autograder will ask for your \textcolor{blue}{perceptron.py} file.
+\begin{itemize}
+    \item Be sure you only use \textcolor{blue}{numpy} in this file
+    \item Only include the Perceptron class
+    \item Do not change method names of the methods, their inputs and outputs.
+    \item Comply with the assertions provided in the Perceptron class.
+    \item Your data wrangling and plot functions must be in separate files that you are not required to send.
+\end{itemize}
+For the rest you will report the trajectories and your response for (d) and (e) in your pdf submission.
