@@ -1,0 +1,53 @@
+\section{Validity of a kernel [30]}
+\label{prb:hw3::prob1}
+Prove that $K_1$ an $K_2$ are valid kernel functions.
+
+
+\begin{itemize}[(a)]
+    \item (15 points) $K_1(\bm{x_1},\bm{x_2})=exp(\frac{-||\bm{x_1}-\bm{x_2}||^2}{\sigma^2}) $, where $\sigma$ is a constant, $K_1: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}$.
+\end{itemize}  
+\begin{itemize}[(b)]
+    \item (15 points) $K_2(x_1,x_2)=\sigma^2exp(cos(\frac{2\pi (x_1-x_2)}{p})) $, where $\sigma, p$ are constants, $K_2: \mathbb{R} \times \mathbb{R} \rightarrow \mathbb{R}$. 
+\end{itemize}  
+\noindent You can assume the following statements hold without proving them:
+
+\begin{enumerate}[leftmargin=\parindent,align=left,labelwidth=\parindent,labelsep=0pt]
+    \item Kernels are closed under summation, multiplication, combination of polynomials with non-negative coefficients, and exponentiation.
+    \item $K(\bm{x_1},\bm{x_2})=\bm{x_1}^T\bm{x_2}$ is a valid kernel function, where $K: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}$.
+    \item $K(\bm{x_1},\bm{x_2})=f(\bm{x_1})f(\bm{x_2})$ is a valid kernel function, where $f: \mathbb{R}^d \rightarrow \mathbb{R}$, $K: \mathbb{R}^d \times \mathbb{R}^d \rightarrow \mathbb{R}$.
+\end{enumerate}
+
+
+
+
+\newpage
+\section{Kernelized soft SVM [40]}
+Given a training set $S=\{(\bm{x_1},y_1),\cdots, (\bm{x_n},y_n)\}$ where $\bm{x_i}\in\mathbb{R}^d, y_i \in \{-1,1\}$. Recall that the soft SVM problem can be formulated as follows:
+
+\begin{equation}
+\label{regularized_hinge_loss}
+\underset{\mathbf{w}}{\text{minimize}} \;\; \frac{1}{2}||\mathbf{w}||_2^2 + C \sum_{i=1}^n \max\left(0, 1 - y_{i} (\mathbf{w}^T\mathbf{x}_i) \right)
+\end{equation}
+
+\begin{itemize}[(a)]
+    \item (10 points) Given a kernel function $K(\bm{x_1},\bm{x_2}) = \langle \psi(\bm{x_1}),\psi(\bm{x_2})\rangle$. Rewrite equation (\ref{regularized_hinge_loss}) to solve for the kernelized soft SVM problem.
+\end{itemize}  
+\begin{itemize}[(b)]
+    \item (30 points) Write down the stochastic gradient descent algorithm (with mini-batch) for solving the problem in (a), assuming the batch size is $b$. Use the kernel trick instead of directly applying soft SVM to the transformed data, $\psi(\bm{x_i})$. The algorithm should include the initialization step, the update step, and the output. Only the pseudo code of the algorithm is needed. No coding is required.
+\end{itemize}  
+\label{prb:hw3::prob2}
+
+
+
+\newpage
+\section{Kernels and linear separability [30]}
+\label{prb:hw3::prob3}
+\begin{itemize}[(a)]
+    \item (15 points) Show an example of a separator $g: \mathbb{R} \rightarrow \{-1,1\}$ such that it is not perfectly separable even with infinite data using an identity kernel and a linear separator, but is separable if using either $K_1$ or $K_2$ from Q\ref{prb:hw3::prob1} and a linear separator.
+\end{itemize} 
+
+\begin{itemize}[(b)]
+    \item (15 points) Show an example of a separator $g: \mathbb{R} \rightarrow \{-1,1\}$ such that it is not perfectly separable even with infinite data using $K_1$ and a linear separator, but is separable if using $K_2$ and a linear separator. 
+\end{itemize} 
+
+\noindent \textbf{Note}: You can either write down the separator algebraically or show a hand-drawn plot of the data representing the separator.
