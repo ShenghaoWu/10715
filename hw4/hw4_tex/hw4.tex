@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{bm}
+\usepackage{graphicx}
+
+
+% Declare Operators
+\newcommand{\weight}{w}
+\newcommand{\bias}{b}
+\newcommand{\slack}{\xi}
+\newcommand{\dual}{v}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\const}{C}
+\newcommand{\margin}{M}
+\newcommand{\kernel}{K}
+\newcommand{\kernelmap}{\phi}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\param}{\gamma}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+
+\usepackage[utf8]{inputenc}
+
+\title{10-715 Fall 2020 Homeworks}
+
+\begin{document}
+
+% \begin{center}
+% {\Large CMU 10-715: Homework 1}\\
+% Perceptron Algorithm on Handwritten Digits \\
+% {\bf DUE: Sept. 12, 2020, 11:59 PM}.\\
+% \end{center}
+
+% \begin{center}
+% {\Large CMU 10-715: Homework 3}\\
+% Kernel methods \\
+% {\bf DUE: Oct. 3, 2020, 11:59 PM}.\\
+% \end{center}
+
+\begin{center}
+{\Large CMU 10-715: Homework 4}\\
+VC Dimension \\
+{\bf DUE: Oct. 10, 2020, 11:59 PM}.\\
+\end{center}
+
+\textbf{\large Instructions}:
+\begin{itemize}
+    \item \textbf{Collaboration policy:} Collaboration on solving the homework is allowed, after you have thought about the problems on your own. It is also OK to get clarification (but not solutions) from books, again after you have thought about the problems on your own. Please don’t search for answers on the web, previous years’ homeworks, etc. (please ask the TAs if you are not sure if you can use a particular reference). There are two requirements: first, cite your collaborators fully and completely (e.g., ``Alice explained to me what is asked in Question 4.3''). Second, write your solution \emph{independently}: close the book and all of your notes, and send collaborators out of the room, so that the solution comes from you only. 
+    \item \textbf{Submitting your work:} Assignments should be submitted as PDFs using Gradescope unless explicitly stated otherwise. Each derivation/proof should be completed on a separate page. Submissions can be handwritten, but should be labeled and clearly legible. Else, submission can be written in LaTeX.
+    
+    \item \textbf{Late days:} For each homework you get three late days to be used only when anything urgent comes up. No points will be deducted for using these late days. We will consider an honor system where we will rely on you to use the late days appropriately.
+    
+
+\end{itemize}
+
+\newpage
+
+
+\section{VC Dimension of Polynomial Classifiers [100]}
+\label{prb:hw4::prob1}
+We discussed in class that the VC dimension of a single segment line classifier in $\mathbb{R}$ is 2. In this homework we are going to analyze the VC dimension of a similar hypthosesis class, parametrizing it with a well known family of functions.\\
+
+Let $M=\{x_1, x_2, ..., x_m\}$ be a set of $m$ points in $\mathbb{R}$ such that $x_i \leq x_j$ if $i<j$ in $\mathbb{R}$ and the set $\{I_0, I_1, I_{m+1}\}$ of m+1 intervals associated with $M$, where: 
+$$I_0=(-\infty, x_1], I_1=(x_1, x_2], I_2=(x_2, x_3], ..., I_{m}=(x_m, \infty).$$
+Now consider the classifier $h_M$ which assigns the same label (+1 or -1) for all points inside any interval. Formally, if $x_1,x_2 \in I_j \text{ with } j \in \{0,...,m\} \text{, then } h_M(x_1)=h_M(x_2) $ and $h_M(x_1) \in \{-1,1\}$.\\
+
+Let $\mathcal{H}_m=\{ h_M | \quad |M|=m \}$, the hypothesis class consisting of all classifiers $h_M$ with $M$ consisting of $m$ points in $\mathbb{R}$.\\
+
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[scale=0.2]{hw4/images/n_segments.png}
+%     \caption{An example of a classification task with 3 thresholds.}
+% \end{figure}
+
+Consider the set of polynomials functions of $x$ $\in \mathbb{R}$ with degree at most $d$, 
+$$P_d(x) = \sum_{i=0}^d a_i x^i$$
+
+with $a_i \in \mathbb{R}$. For a given $P_d(x)$ we define the classifier $f_d(x)$ as,
+\[
+f_{d}(x) = 
+\begin{cases}
++1 & \text{ if } P_d(x) \geq 0 \\
+-1 & \text{otherwise}.
+\end{cases}
+\]
+
+\begin{itemize}[(a)]
+    \item (10 points) We are going to compute the VC dimension of the hypothesis class defined by $f_{d}$ below, but before doing so     it will be useful to develop the intuition on the problem. How is the polynomial classifier $f_{d}$ related to they hypothesis class $\mathcal{H}_m$ defined above?
+\end{itemize}  
+\begin{itemize}[(b)]
+    \item (15 points) Find a function $\phi:\; \mathbb{R} \mapsto \mathbb{R}^{d+1}$ that allows you to write the polynomial $P_d(x) = \langle a, \phi(x) \rangle$ as a dot product between $a\in \mathbb{R}^{d+1}$ and $\phi(x) \in \mathbb{R}^{d+1}$.
+\end{itemize}
+\begin{itemize}[(c)]
+    \item (30 points) Think of the implication of expressing the polynomials as a linear function in $\mathbb{R}^{d+1}$ to prove that the VC dimension of the decision function $f_{d}$ is at most $d+1$.
+\end{itemize}
+\begin{itemize}[(d)]
+    \item (15 points) To prove that the VC dimension is grater than or equal to  $d+1$, first show that there exists a set of points $\{x_{1},x_{2},\dots,x_{d+1}\} \subseteq \mathbb{R}$ such that $\{\phi(x_{1}),\phi(x_{2}),\dots,\phi(x_{d+1})\}$, are $d+1$ linearly independent vectors in $\mathbb{R}^{d+1}$.  
+    \item (15 points) Then show that with the vectors from part (d) of the problem and your findings from part (b) of the problem you can shatter any possible labeling vector $y = (y_1, y_2, \dots, y_{d+1})^{\intercal}$ with $y_{i} \in \{-1,+1\}$. What is the implied $f_d$ classifier?
+\end{itemize}
+\begin{itemize}[(e)]
+    \item (15 points) Using (c) and (d) infer the VC dimension of the $d-$th polynomial classifier $f_{d}$. What can you say about the VC dimension of the family of all possible polynomial classifiers on the real numbers?
+\end{itemize}
+
+\end{document}
