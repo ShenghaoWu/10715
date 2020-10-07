@@ -33,6 +33,6 @@ You are not allowed to use packages that directly implement the kernel SVM algor
 
 \begin{parts}
 \part[5] (5 pts) The quadratic programming solver method from CVXOPT \textcolor{blue}{solvers.qp()} uses as input the matrices $\mathbf{Q}, \mathbf{p}, \mathbf{G}, \mathbf{h}, \mathbf{A}, \mathbf{b}$.\footnote{Documentation: \url{https://cvxopt.org/userguide/coneprog.html\#quadratic-programming}.\\The $\preccurlyeq$ symbol represents componentwise inequality.} Write the correspondence between these inputs and the matrices of Equation \ref{soft_svm_dual}. 
-\part[20] (20 pts) Fit the classifier with $\gamma = \{ 100, 200\}$ and $C=1$ on the training data using CVXOPT. 
-After you fit your classifier, plot the original data and the decision boundaries for $\gamma = \{ 100, 200\}.$ You can use the python function \textcolor{blue}{contourf} on a fine meshgrid to plot the decision boundary.
+\part[20] (20 pts) Fit the classifier with $\gamma = \{ 1/4, 1/100\}$ and $C=1$ on the training data using CVXOPT. 
+After you fit your classifier, plot the original data and the decision boundaries for $\gamma = \{ 1/4, 1/100\}.$ You can use the python function \textcolor{blue}{contourf} on a fine meshgrid to plot the decision boundary.
 \end{parts}
