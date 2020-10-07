@@ -1,0 +1,21 @@
+Consider a binary classification problem, with ${\cal{X}} = \mathbb{R}^d$ and ${\cal Y} = \{-1,1\}$ and a  training dataset $\{(\xv_i,y_i)\}_{i \in [n]}$. Consider the perceptron algorithm seen in class. \\
+
+\begin{algorithm}[H]
+\SetAlgoLined
+Initialize parameters $\mathbf{w}_{0}=0$, $b_{0}=0$, step $t=0$\;
+ \While{$\exists i\in [n]$ such that $y_{i}(\mathbf{w}^\top \mathbf{x}_{i} + b)\leq 0$}{
+   $\mathbf{w}_{t+1}=\mathbf{w}_{t}+y_{i}\mathbf{x}_{i}$\;
+   $b_{t+1}=b_{t}+y_{i}$\;
+   $t=t+1$\;
+ }
+ Output $\mathbf{w}_t$ and $b_t$
+ \caption{Perceptron algorithm}
+\end{algorithm} 
+
+\vspace{5mm}
+
+\begin{parts}
+\part[5](5 pts) With this context, what does it mean for a training dataset $\{(\xv_i,y_i)\}_{i \in [n]}$ to not be linearly separable in terms of $\wv$ and $b$? Please write down the formal mathematical meaning of it.
+
+\part[5] (5 pts) Prove or give a counter example: The perceptron algorithm  will never terminate when the training data is not linearly separable.
+\end{parts}

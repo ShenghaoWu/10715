@@ -1,0 +1,18 @@
+Although the epsilon-net argument works in many other problems, \textcolor{red}{here it does not} --- there are flaws in the arguments below. Your goal is to identify any one of the five steps below which does NOT work and justify your answer.  To be clear, you do not have to show whether other steps work or not -- just need to identify one step and show that the claim in that step is false.
+\vspace{5mm}
+
+Consider the realizability and i.i.d. assummptions. In the lecture, we proved a bound on the sample complexity of PAC learning when the hypothesis class ${\cal H}$ is a finite-sized class. In particular, we showed that ${\cal H}$ is $(\epsilon,\delta)$-PAC learnable as long as the number of samples is at least $\left \lceil{\frac{log(|\cal H|/\delta)}{\epsilon}}\right \rceil $. However, if the class ${\cal H}$ is infinite-sized, then however simple this class may be, simply substituting it in the bound above gives a vaccuous result. 
+
+A common trick for using such results for finite settings in order to get results for infinite settings is called `epsilon-net arguments'. The high-level idea is to (i) quantize the infinite setting to obtain a finite setting, (ii) use the finite result, and (iii) show that the quantization doesn't hurt too much. 
+
+Let us try that approach here.\\
+Consider $\mathcal{X} = [0,1]$ and $\mathcal{H} = \{ h(x) = \text{sign}(x-\beta) | \beta \in [0,1]\}$. Clearly, $|\mathcal{H}|=\infty$. The goal is to use the above PAC learning result (which was derived for finite-sized $\mathcal{H}$) to obtain PAC learnability for this class via an epsilon-net argument.
+\begin{enumerate}
+    \item For some (finite) positive integer $k$, define $\mathcal{H}_k$ as the hypotheses have thresholds $0, 1/k, 2/k, ..., 1$, that is, $\mathcal{H}_k = \{ h(x) = \text{sign}(x-\beta) | \beta \in \{0, 1/k, 2/k, ..., 1\}\}$. Thus we have  $\mathcal{H}_k \subseteq \mathcal{H}$. 
+    \item Since $|\mathcal{H}_k|=k+1 < \infty$, we can use the aforementioned result to get a sufficient sample size for $(\epsilon/2,\delta)$-PAC learnability of ${\mathcal{H}_k}$ as   $\left \lceil{\frac{2 \log((k+1)/\delta)}{\epsilon}}\right \rceil $.
+    \item We can then show that there exists a large enough finite value of $k$ such that for every $h^* \in \mathcal{H}$, there exists some $h_k \in \mathcal{H}_k$ such that $R_{(D,h^*)}(h_k) \leq \epsilon/2$ for every distribution $D$. Denote this value of $k$ as $\xi$. 
+    \item Finally consider the Empirical Risk Minizer (ERM) on class $\mathcal{H}_\xi$ and denote the output as $h_{ERM}$. Consider any true classifier $h^* \in \mathcal{H}$ and any distribution $D$. From point 3 above, let $h_{approx} \in \mathcal{H}_\xi$ be a hypothesis such that $R_{(D,h^*)}(h_{approx}) \leq \epsilon/2$. Show that $R_{(D,h^*)}(h_{ERM}) \leq R_{(D,h^*)}(h_{approx}) +     R_{(D,h_{approx})}(h_{ERM})$.
+    \item Conclude that $\mathcal{H}$ is $(\epsilon,\delta)$-PAC learnable if the number of samples is at least\\ $\lceil \frac{2\log(|\mathcal{H}_{\xi}|/\delta)}{\epsilon} \rceil = \lceil\frac{2\log(|(\xi+1)|/\delta)}{\epsilon} \rceil$.
+\end{enumerate}
+
+

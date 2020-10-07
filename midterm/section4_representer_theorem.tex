@@ -1,0 +1,7 @@
+Recall the Representer Theorem (and assume it as a given). Let $\psi:\cal X \rightarrow \cal F$ where $\cal F$ is Hilbert space. Consider $f : \mathbb{R}^n \rightarrow \mathbb{R}$. Now, there are many algorithms which optimize over the squared norm $||\mathbf{w}||^2$. Moreover, when trying to write down some algorithms in the form required by Mercer's theorem, they have some other function of $\mathbf{x_i}$'s as well in their objective. With this motivation, your goal is to prove that algorithms that optimize  the following objective are also kernelizable:
+
+\begin{equation*}
+    \argmin_{\mathbf{w} \in \cal F}~~~ f(\langle \mathbf{w}, \psi(\mathbf{x_1}) \rangle,..., \langle \mathbf{w}, \psi(\mathbf{x_n}) \rangle) + \tilde{R}(||\mathbf{w}||,||\mathbf{w}||^2) + g(\mathbf{x_1},...,\mathbf{x_n}).
+\end{equation*}
+ where $f(\langle \mathbf{w}, \psi(\mathbf{x_1}) \rangle,..., \langle \mathbf{w}, \psi(\mathbf{x_n}) \rangle)$ and $g(\mathbf{x_1},...,\mathbf{x_n})$ are arbitrary functions, $\tilde{R}(||\mathbf{w}||,||\mathbf{w}||^2)$ is coordinatewise non-decreasing.
+

@@ -1,0 +1,16 @@
+Let a classification problem be defined by $\mathcal{X} = \mathbb{R}^d$ for some $d \geq 1$ and ${\cal Y} = \{-1,1\}$. \\
+For any value of integer $m \geq 1$ and any $\mathbf{x_1},\ldots,\mathbf{x_m} \in \mathcal{X}$, define the hypothesis class:
+\begin{align*}
+    \mathcal{H}(\xv_1,\ldots,\xv_m) = \{ h: \mathcal{X} \rightarrow \mathcal{Y} \;|\; h(\xv_1) = \cdots = h(\xv_m) = 1, ~ \text{and } h(\xv)=-1 \text{ for other  } \xv \in \mathcal{X} \}.
+\end{align*}
+Now define,
+\begin{align*}
+    \mathcal{H}_m = \bigcup_{\xv_1,\ldots,\xv_m \in \mathcal{X}} \mathcal{H}(\xv_1,\ldots,\xv_m).
+\end{align*}
+Finally define,
+\begin{align*}
+    \mathcal{H} = \bigcup_{\text{all integers } m \geq 1} \mathcal{H}_m.
+\end{align*}
+
+
+Is the class $\mathcal{H}$ PAC learnable (under realizability)? If yes, derive an upper bound on its sample complexity. Supplement your responses with proofs.

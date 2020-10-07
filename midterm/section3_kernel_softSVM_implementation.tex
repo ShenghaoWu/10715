@@ -1,0 +1,38 @@
+
+Consider the soft SVM objective:
+\begin{equation}
+\label{soft_svm_primal}
+\begin{aligned}
+& \underset{\wv, \xi_i}{\text{minimize}} && \frac{1}{2}||\wv||_2^2 + C\sum_{i=1}^n\xi_i\\
+& \text{subject to} && y_i(\wv^T\psi(x_i) + b) \geq 1-\xi_i & i = 1,\ldots, n\\
+& && \xi_i \geq 0 & i = 1,\ldots, n
+\end{aligned}
+\end{equation}
+
+Equation \ref{soft_svm_primal} has its dual form:
+\begin{equation}
+\label{soft_svm_dual}
+\begin{aligned} 
+  & \underset{\alpha}{\text{maximize}} && \mathbf{1}^T\alpha - \frac{1}{2}\alpha^T \tilde{K}\alpha \\
+  & \text{subject to} && 0\leq \alpha_i\leq C \; \text{for all } i, \quad \alpha^Ty = 0\\
+\end{aligned}
+\end{equation}
+where $\alpha$ is the dual variable, $K_{ij} = \langle\psi(x_i), \psi(x_j)\rangle$, and $\tilde{K}_{ij} = y_iy_jK_{ij}$.
+
+\vspace{5 mm}
+In this question you will implement your own Kernel Soft SVM and test it on the data \textcolor{blue}{data.txt}\footnote{The data is provided to you on this link \url{https://github.com/ShenghaoWu/10715/midterm/}} using the CVXOPT library \url{https://cvxopt.org/}.
+
+You should use the Radial Basis Function kernel:
+$$\langle \psi(x_i), \psi(x_j) \rangle = K_{ij} = \exp\left(-\gamma||x_i - x_j||_2^2\right)$$
+
+
+
+You are not allowed to use packages that directly implement the kernel SVM algorithm. Please append your code to the end of your pdf submission. Your code will \textbf{NOT} be evaluated by the Autograder.
+
+\vspace{5mm}
+
+\begin{parts}
+\part[5] (5 pts) The quadratic programming solver method from CVXOPT \textcolor{blue}{solvers.qp()} uses as input the matrices $\mathbf{Q}, \mathbf{p}, \mathbf{G}, \mathbf{h}, \mathbf{A}, \mathbf{b}$.\footnote{Documentation: \url{https://cvxopt.org/userguide/coneprog.html\#quadratic-programming}.\\The $\preccurlyeq$ symbol represents componentwise inequality.} Write the correspondence between these inputs and the matrices of Equation \ref{soft_svm_dual}. 
+\part[20] (20 pts) Fit the classifier with $\gamma = \{ 4, 100\}$ and $C=1$ on the training data using CVXOPT. 
+After you fit your classifier, plot the original data and the decision boundaries for $\gamma = \{ 4, 100\}.$ You can use the python function \textcolor{blue}{contourf} on a fine meshgrid to plot the decision boundary.
+\end{parts}
