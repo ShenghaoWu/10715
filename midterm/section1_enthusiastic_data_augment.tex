@@ -10,7 +10,7 @@ An enthusiastic student tries the following new approach towards training.
     For each $i \in [n]$ and $j \in [d]$ define $\mathbf{z}_{ij} \in \mathbb{R}^{d}$ whose $j^{th}$ coordinate equals the $j^{th}$ coordinate of $\xv_i$ and all other coordinates are zero. The following figure shows an example:\\
     \includegraphics[width=0.5\linewidth]{midterm/images/enthusiastic.pdf}
     
-     Now consider the modified training dataset:  $\{(\mathbf{z}_{ij},y_{ij})\}_{i\in [\,n\,]\; j\in [\,d\,]}$.
+     Now consider the modified training dataset:  $\{(\mathbf{z}_{ij},y_{ij})\}_{i\in [\,n\,]\; j\in [\,d\,]}$ where $y_{ij}=y_i$ in the original training dataset.
 
     \item The enthusiastic student trains a perceptron on this modified training set and obtains $\wv \in \mathbb{R}^d, b \in \mathbb{R}$.
     \item Given a new point $\xv \in \mathbb{R}^d$, the prediction is $f(\xv) = \text{sign} (\langle \wv, \xv \rangle + b)$.
