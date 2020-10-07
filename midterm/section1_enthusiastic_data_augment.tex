@@ -7,7 +7,7 @@ Consider binary classification, with ${\cal{X}} = \mathbb{R}^d$ for some $d \geq
 An enthusiastic student tries the following new approach towards training.
 \begin{itemize}
     \item The student creates a new training dataset of $nd$ samples as follows.\\
-    For each $i \in [n]$ and $j \in [d]$ define $\mathbf{z}_{ij} \in \mathbb{R}^{nd}$ whose $j^{th}$ coordinate equals the $j^{th}$ coordinate of $\xv_i$ and all other coordinates are zero. The following figure shows an example:\\
+    For each $i \in [n]$ and $j \in [d]$ define $\mathbf{z}_{ij} \in \mathbb{R}^{d}$ whose $j^{th}$ coordinate equals the $j^{th}$ coordinate of $\xv_i$ and all other coordinates are zero. The following figure shows an example:\\
     \includegraphics[width=0.5\linewidth]{midterm/images/enthusiastic.pdf}
     
      Now consider the modified training dataset:  $\{(\mathbf{z}_{ij},y_{ij})\}_{i\in [\,n\,]\; j\in [\,d\,]}$.
