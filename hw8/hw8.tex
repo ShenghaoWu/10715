@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{bm}
+\usepackage{graphicx}
+
+% Declare Operators
+\newcommand{\weight}{w}
+\newcommand{\bias}{b}
+\newcommand{\slack}{\xi}
+\newcommand{\dual}{v}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\const}{C}
+\newcommand{\margin}{M}
+\newcommand{\kernel}{K}
+\newcommand{\kernelmap}{\phi}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\param}{\gamma}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+
+\usepackage[utf8]{inputenc}
+
+\title{10-715 Fall 2020 Homeworks}
+
+\begin{document}
+
+% \begin{center}
+% {\Large CMU 10-715: Homework 1}\\
+% Perceptron Algorithm on Handwritten Digits \\
+% {\bf DUE: Sept. 12, 2020, 11:59 PM}.\\
+% \end{center}
+
+\begin{center}
+{\Large CMU 10-715: Homework 8}\\
+Decision Trees \\
+{\bf DUE: Nov. 16, 2020, 11:59 PM}.\\
+\end{center}
+
+
+\textbf{\large Instructions}:
+\begin{itemize}
+    \item \textbf{Collaboration policy:} Collaboration on solving the homework is allowed, after you have thought about the problems on your own. It is also OK to get clarification (but not solutions) from books, again after you have thought about the problems on your own. Please don’t search for answers on the web, previous years’ homeworks, etc. (please ask the TAs if you are not sure if you can use a particular reference). There are two requirements: first, cite your collaborators fully and completely (e.g., ``Alice explained to me what is asked in Question 4.3''). Second, write your solution \emph{independently}: close the book and all of your notes, and send collaborators out of the room, so that the solution comes from you only. 
+    \item \textbf{Submitting your work:} Assignments should be submitted as PDFs using Gradescope unless explicitly stated otherwise. Each derivation/proof should be completed on a separate page. Submissions can be handwritten, but should be labeled and clearly legible. Else, submission can be written in LaTeX.
+    
+    \item \textbf{Late days:} For each homework you get three late days to be used only when anything urgent comes up. No points will be deducted for using these late days. We will consider an honor system where we will rely on you to use the late days appropriately.
+    
+
+\end{itemize}
+
+\newpage
+\section{Decision Trees}
+
+In this homework you will implement a decision tree and train it to detect recurrence of breast cancer on the UCI breast cancer dataset. In particular, you need to implement a variant of the ID3 algorithm learnt in class.
+
+\subsection{Modified ID3 algorithm}
+The ID3 algorithm learnt in class only allows for binary target and binary features. The modified version presented can use multivariate features. \\
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\textbf{input:} training set S, features A, max depth k, node depth d, \texttt{Gain} measure\\
+Create a Root node for the tree \\
+\uIf{all examples in S are labeled 1}{\textbf{return} a leaf 1}
+\uElseIf{all examples in S are labeled 0}{\textbf{return} a leaf 0}
+\uElseIf{$k=d$}{\textbf{return} a leaf whose value is majority of labels in S}
+\Else{
+$j \leftarrow arg max_{i \in A} \text{\texttt{Gain}}(S,i)$}
+Create a subtree with root node having attribute $j$ \\
+\For{each unique value $v_i$ of feature $j$}{
+    Add a new branch corresponding to $j = v_i$ \\
+    \uIf{$|S_{v_{i}}|=0$}{Add a leaf whose value is majority of labels in S below the branch}
+    \Else{Add the subtree returned by $ID3(S_{v_i}, A \setminus \{j\}, k, d+1, \text{\texttt{Gain}})$}
+    }
+Return Root
+ \caption{Modified ID3 algorithm}
+\end{algorithm}
+
+\subsection{Instructions}
+\begin{itemize}
+\item Download the data from \url{https://github.com/ShenghaoWu/10715/tree/master/hw8} and read the dataset description in breast-cancer.names.txt. \textit{Hint: you may want to create a dictionary will all the different values for each feature in order to create all the possible branches for each variable.}
+\item Implement the modified ID3 algorithm stated above. For this hw we do not provide you with a base code.
+\item Use the Gini Index as Gain measure
+\item The target variable is the presence of recurrence-events (1: recurrence-events, 0: no-recurrence-events)
+\item \textbf{Include all your code at the end of the pdf.}
+\end{itemize}
+
+\subsection{Results}
+\begin{enumerate}[a]
+\item (50 points) Perform k-fold cross-validation with $k=3$. Try with max depth 1, 3, 5, 7 and 9. Plot the training and validation set accuracy for each value of max depth.
+\item (30 points) Train the model again with ALL the training samples on the best max depth based on the previous question. Report train and test accuracy.
+\item (20 points) What can you say about the relation between train accuracy and max depth? What about validation accuracy and max depth?
+
+
+\end{enumerate}
+\end{document}
