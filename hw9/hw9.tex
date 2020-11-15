@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+% \usepackage{algorithm,algpseudocode}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% Declare Operators
+\newcommand{\weight}{w}
+\newcommand{\bias}{b}
+\newcommand{\slack}{\xi}
+\newcommand{\dual}{v}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\const}{C}
+\newcommand{\margin}{M}
+\newcommand{\kernel}{K}
+\newcommand{\kernelmap}{\phi}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\param}{\gamma}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+
+\usepackage[utf8]{inputenc}
+
+\title{10-715 Fall 2020 Homeworks}
+
+\begin{document}
+
+% \begin{center}
+% {\Large CMU 10-715: Homework 1}\\
+% Perceptron Algorithm on Handwritten Digits \\
+% {\bf DUE: Sept. 12, 2020, 11:59 PM}.\\
+% \end{center}
+
+\begin{center}
+{\Large CMU 10-715: Homework 9}\\
+Linkage Based Clustering \\
+{\bf DUE: Nov. 24, 2020, 11:59 PM}.\\
+\end{center}
+
+
+\textbf{\large Instructions}:
+\begin{itemize}
+    \item \textbf{Collaboration policy:} Collaboration on solving the homework is allowed, after you have thought about the problems on your own. It is also OK to get clarification (but not solutions) from books, again after you have thought about the problems on your own. Please don’t search for answers on the web, previous years’ homeworks, etc. (please ask the TAs if you are not sure if you can use a particular reference). There are two requirements: first, cite your collaborators fully and completely (e.g., ``Alice explained to me what is asked in Question 4.3''). Second, write your solution \emph{independently}: close the book and all of your notes, and send collaborators out of the room, so that the solution comes from you only. 
+    \item \textbf{Submitting your work:} Assignments should be submitted as PDFs using Gradescope unless explicitly stated otherwise. Each derivation/proof should be completed on a separate page. Submissions can be handwritten, but should be labeled and clearly legible. Else, submission can be written in LaTeX.
+    
+    \item \textbf{Late days:} For each homework you get three late days to be used only when anything urgent comes up. No points will be deducted for using these late days. We will consider an honor system where we will rely on you to use the late days appropriately.
+    
+
+\end{itemize}
+
+\newpage
+\section{Linkage Based Clustering}
+
+In this homework you will implement a Linkage Based Clustering algorithm, you will try variants of the clustering algorithm by changing the distances of the original space and the distances defined for the clusters. Your main objective will be to apply the unsupervised algorithm to see if the \say{unsupervised} labels produced by your implementation match the \say{true} labels of the dataset provided for the homework.\\
+
+\textbf{Since this is an unsupervised algorithm the evaluation will be solely on the report of your findings and not on the performance of the algorithm. Please do not use the \say{true} labels that are provided to you until the end, once you feel confident that your algorithm has achieved reasonable results}. \\
+
+We first describe single-linkage algorithm. Let the training matrix $\mathbf{X}\in\mathbb{R}^{n\times d}$. For easier exposition we will denote as $D: \mathcal{C}\times\mathcal{C}\mapsto \mathbb{R}$ the distance function between a pair of clusters, and $d:\mathcal{X}\times \mathcal{X}\mapsto \mathbb{R}$ the distance function between observations of the original space.
+
+\vspace{5mm}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\textbf{Input:} Training matrix $\mathbf{X}\in\mathbb{R}^{n\times d}$, cluster distance $D$ and number of clusters $k$. * \\
+Begin with disjoint clustering (each point considered a cluster). \\
+\vspace{2mm}
+While number of clusters larger than $k$:
+\begin{enumerate}
+\item Find the pair of clusters $\mathcal{C}_{i^*}, \mathcal{C}_{j^*}$ with the minimum distance:\\
+        $\qquad \mathcal{C}_{i^*}, \mathcal{C}_{j^*} =\underset{\mathcal{C}_{i}, \mathcal{C}_{j} \in \mathcal{C}}{\text{argmin}}
+        \left(D(\mathcal{C}_{i},\mathcal{C}_{j})\right)$
+\item Merge the clusters into $\mathcal{C}_{new}=\mathcal{C}_{i^*}\cup \mathcal{C}_{j^*}$.
+\end{enumerate}
+\textbf{Output:} Cluster assignation \\
+*Note: the cluster distance $D$ incorporates the selection of $d$.
+\caption{Linkage Based Algorithm}
+\end{algorithm}
+
+% \begin{algorithm}[H]
+% \SetAlgoLined
+% \textbf{Input:} Distances $\mathbf{D}=[d(\mathbf{x_{i}},\mathbf{x_{j}})]\in\mathbb{R}^{n \times n}$\\
+% \begin{enumerate}
+%     \item Begin with disjoint clustering (each point considered a cluster).
+%     \item Find the pair of clusters $\mathcal{C}_{h}, \mathcal{C}_{k}$ with the minimum distance according to:\\
+%         $\qquad \delta(\mathcal{C}_{h}, \mathcal{C}_{k}) =\underset{\mathbf{x}_{i}\in \mathcal{C}_{h}, \mathbf{x}_{j}\in \mathcal{C}_{k}}{\text{min}}
+%         \left(d(\mathbf{x}_{i}, \mathbf{x}_{j})\right)$
+%     \item Merge the clusters $\mathcal{C}_{h}$ and $\mathcal{C}_{k}$ into $\mathcal{C}_{new}=\mathcal{C}_{h}\cup \mathcal{C}_{k}$.
+%     \item Update the distance matrix $\mathbf{D}$ by removing the rows and columns that correspond to $\mathcal{C}_{h}$ and $\mathcal{C}_{k}$. The distance between the cluster $\mathcal{C}_{new}=\mathcal{C}_{new}=\mathcal{C}_{h}\cup \mathcal{C}_{k}$ and an old cluster $\mathcal{C}_{old}$ will be given by:\\
+%         $\qquad \delta(\mathcal{C}_{old},\mathcal{C}_{new})
+%         =\text{min}\left(
+%             \delta(\mathcal{C}_{old}, \mathcal{C}_{h}),\;
+%             \delta(\mathcal{C}_{old}, \mathcal{C}_{k})
+%             \right)$
+%     \item Stop when the $n$ observations are in one cluster, otherwise repeat starting at step 2.
+% \end{enumerate}
+% \textbf{Output:} Clustered data and labels at different levels of the procedure.
+% \caption{Single-Linkage Algorithm}
+% \end{algorithm}
+
+\newpage
+\subsection{Instructions}
+\begin{itemize}
+
+\item Download the data from \url{https://github.com/ShenghaoWu/10715/tree/master/hw9} and read the train matrix available at data/train.csv. (Use the data/labels.csv for the true labels at the end). Your goal is to perform clustering on this dataset.
+
+\item Code up the single-linkage clustering algorithm.
+
+\item Your goal is to design and choose some distance functions (more details below) so that based on the \emph{training set} you think you have a good clustering algorithm for this data. You can feel free to do whatever you want with the training data, e.g., plot it in any way you want or eyeball the individual datapoints etc. In this process, get intuition behind the data and then either choose from below or design your own distance functions.
+
+\item Once you choose/design your distance function, you set that in stone and then look at the test data. You will be asked to report the performance of the clustering algorithm with your chosen distance function on the test data. Please keep in mind that our overall bar for a good grade in this homework is very low, so please abide by a honor code of not looking at the test data, and don't worry too much if you don't get a great performance on the test data. The goal is to get your hands dirty and have a good learning experience. 
+
+\item You will need to use some distance function, possibly create your own. Here are some examples of popular distance functions. You can feel free to try out these distances (this is completely optional) before you start thinking about what distance you eventually want to choose/design and use:
+\begin{enumerate}
+    \item Euclidean Distance $\qquad d(\mathbf{x}_{i}, \mathbf{x}_{j}) = \sqrt{(\mathbf{x}_{i}-\mathbf{x}_{j})^{\intercal}(\mathbf{x}_{i}-\mathbf{x}_{j})}$
+    \item Cosine Distance $\qquad d(\mathbf{x}_{i}, \mathbf{x}_{j}) = 1-\frac{\mathbf{x}_{i}^{\intercal}x_{j}}{||\mathbf{x}_{i}||\mathbf{x}_{j}||}$
+    \item City Block Distance $\qquad d(\mathbf{x}_{i}, \mathbf{x}_{j})=\sum^{d}_{h=1}|x_{i,h}-x_{j,h}|$
+\end{enumerate}
+
+\item Select among the following variants of the Linkage based algorithm by changing the clusters distance $D: \mathcal{C}\times\mathcal{C}\mapsto \mathbb{R}$ accordingly. You can feel free to pick any one and stick with it or try all three and pick the one which you feel works best -- your choice. 
+    \begin{enumerate}
+        \item Single linkage
+        $\qquad D(\mathcal{C}_{h}, \mathcal{C}_{k})=\underset{\mathbf{x}_{i}\in \mathcal{C}_{h}, \mathbf{x}_{j}\in \mathcal{C}_{k}}{\text{min}}
+            \left(d(\mathbf{x}_{i}, \mathbf{x}_{j})\right)$
+        \item Max linkage
+        $\qquad D(\mathcal{C}_{h}, \mathcal{C}_{k})=\underset{\mathbf{x}_{i}\in \mathcal{C}_{h}, \mathbf{x}_{j}\in \mathcal{C}_{k}}{\text{max}}
+            \left(d(\mathbf{x}_{i}, \mathbf{x}_{j})\right)$
+        \item Average linkage
+        $\qquad D(\mathcal{C}_{h}, \mathcal{C}_{k})= \sum_{\mathbf{x}_i\in\mathcal{C}_{h}}\sum_{\mathbf{x}_j\in\mathcal{C}_{k}} \frac{d(\mathbf{x}_{i}, \mathbf{x}_{j})}{|\mathcal{C}_{h}|*|\mathcal{C}_{k}|}$
+    \end{enumerate}
+\item We recommend you to try dimensionality reduction techniques as a preprocessing step. Explore the \textbf{train} data to make this decision and feel free to play with multiple functions before deciding the final one! Again, it is important to note that for this part you are not allowed to look at the labels set.
+\end{itemize}
+
+\subsection{Results}
+\begin{enumerate}[a]
+\item (50 points) Report the distances that you used and the intuition behind your selection. This includes your selection for the distance between points and the distance for the clusters. Describe in detail the process that you went through for the selection of the distances.
+\item (50 points) Create a scatter plot with the cluster labels that you obtained and compare it with a scatter plot with the true labels. For this scatter plot use Principal Components Analysis and plot the first two components.
+
+\end{enumerate}
+\end{document}
