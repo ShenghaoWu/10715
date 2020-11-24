@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+% \usepackage{algorithm,algpseudocode}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% Declare Operators
+\newcommand{\weight}{w}
+\newcommand{\bias}{b}
+\newcommand{\slack}{\xi}
+\newcommand{\dual}{v}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\const}{C}
+\newcommand{\margin}{M}
+\newcommand{\kernel}{K}
+\newcommand{\kernelmap}{\phi}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\param}{\gamma}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+
+\usepackage[utf8]{inputenc}
+
+\title{10-715 Fall 2020 Homeworks}
+
+\begin{document}
+
+% \begin{center}
+% {\Large CMU 10-715: Homework 1}\\
+% Perceptron Algorithm on Handwritten Digits \\
+% {\bf DUE: Sept. 12, 2020, 11:59 PM}.\\
+% \end{center}
+
+\begin{center}
+{\Large CMU 10-715: Homework 10}\\
+Online Learning and Multi-armed Bandits \\
+{\bf DUE: Dec. 6, 2020, 11:59 PM}.\\
+\end{center}
+
+
+\textbf{\large Instructions}:
+\begin{itemize}
+    \item \textbf{Collaboration policy:} Collaboration on solving the homework is allowed, after you have thought about the problems on your own. It is also OK to get clarification (but not solutions) from books, again after you have thought about the problems on your own. Please don’t search for answers on the web, previous years’ homeworks, etc. (please ask the TAs if you are not sure if you can use a particular reference). There are two requirements: first, cite your collaborators fully and completely (e.g., ``Alice explained to me what is asked in Question 4.3''). Second, write your solution \emph{independently}: close the book and all of your notes, and send collaborators out of the room, so that the solution comes from you only. 
+    \item \textbf{Submitting your work:} Assignments should be submitted as PDFs using Gradescope unless explicitly stated otherwise. Each derivation/proof should be completed on a separate page. Submissions can be handwritten, but should be labeled and clearly legible. Else, submission can be written in LaTeX.
+    
+    \item \textbf{Late days:} For each homework you get three late days to be used only when anything urgent comes up. No points will be deducted for using these late days. We will consider an honor system where we will rely on you to use the late days appropriately.
+    
+
+\end{itemize}
+\newpage
+\section{Majority Voting with Perfect Experts    [25 pts]} 
+We want to predict if the stock market will go up or down. On day $t$, we observe the actual outcome $y_t\in \{ -1, 1\}$. Assume we have $N$ experts who would vote positive ($+1$) or negative ($-1$) on each day $t$. 
+Consider the following online learning algorithm for this binary prediction problem:
+\vspace{5mm}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\textbf{Input:} Pool of $N$ experts: $S=\{1,\cdots, N\}$, number of days: $T$ \\
+
+\vspace{2mm}
+\For{$t\gets 1$ \KwTo $T$}{
+    Let $S^T_p$ and $S^T_n$ be the non-overlapping subsets of $S$ that voted positive and negative respectively on day $t$.
+    \\
+    Make a prediction based on majority voting: $\hat{y}_t=-1+2*\mathbbm{1}\{|S^T_p|>|S^T_n|\}$
+    \\
+    Observe the actual $y_t$
+    \\
+    $S \gets S^T_p$ if $y_t=+1$. Otherwise $S \gets S^T_n$
+    
+    
+    }
+\caption{Majority Voting Algorithm}
+\end{algorithm}
+\vspace{3mm}
+On day $t$, the algorithm removes the experts that made a wrong prediction. Prove that if there exists at least a perfect expert who will always make the correct prediction, the algorithm will make at most $log_2N$ mistakes. Assume that $T$ is large enough. The number of mistakes is the number of days s.t. $\hat{y}_t \neq y_t$.
+
+
+
+\newpage
+\section{Decomposition of Regret [25 pts]}
+Consider a stochastic multi-armed bandit with $K$ arms. Let $\mu_k$ be the mean of arm $k$ for $k\in [K]$. Let $\mu^{*}=\max_{k\in[K]}\mu_k$. Recall that the (expected) regret is defined as:
+
+\begin{equation*}
+    R(T) = T\mu^{*} - \mathbbm{E}[\sum_{t=1}^TR_t]
+\end{equation*}
+where $R_t$ is the reward received at iteration $t$. Prove that regret can be rewritten in the following form:
+\begin{equation*}
+    R(T) = \sum_{k=1}^K \Delta_k \mathbbm{E}[N_k(T)]
+\end{equation*}
+where $N_k(t)$ is the number of selections of arm $k$ in the first $t$ iterations, $\Delta_k = \mu^{*} -\mu_k$ is the sub-optimality gap of arm $k$.
+
+
+
+
+\newpage
+\section{Simulation of Bernoulli Multi-armed Bandits [50 pts]}
+In this question you will be running simulations on Bernoulli Multi-armed Bandits with different algorithms. Using the same notations as in Q2, assume the bandit has $K$ arms whose indices $k\in [K]$ and the algorithm will run for $T$ iterations.  Consider the following three algorithms:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+$A=\{1,2, \cdots, K \}$
+
+\For{$t\gets 1$ \KwTo $K$}{
+   Randomly select $a\in A$, receive the reward $R_t$.\\
+   $\hat{\mu}_a \gets R_t$\\
+   $A\gets A\setminus a$
+}
+\For{$t\gets K+1$ \KwTo $T$}{
+   $a= argmax _{k\in [K]}\hat{\mu}_k$\\
+   Pull arm $a$ and receive the reward $R_t$\\
+   Update $\hat{\mu}_a$
+    }
+\caption{Follow the Leader (FTL)}
+\end{algorithm}
+\vspace{3mm}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\For{$t\gets 1$ \KwTo $T$}{
+   Uniformly select an arm $a \in [K]$\\
+   Pull the arm and receive the reward $R_t$
+}
+
+\caption{Uniform Exploration}
+\end{algorithm}
+\vspace{3mm}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+$A=\{1,2, \cdots, K \}$
+
+\For{$t\gets 1$ \KwTo $K$}{
+   Randomly select $a\in A$, receive the reward $R_t$.\\
+   $\hat{\mu}_a \gets R_t$\\
+   $A\gets A\setminus a$
+}
+\For{$t\gets K+1$ \KwTo $T$}{
+   $a= argmax _{k\in [K]}\hat{\mu}_k\color{red}+\sqrt{\frac{2logt}{N_k(t)}}$ \\
+   Pull arm $a$ and receive the reward $R_t$\\
+   Update $\hat{\mu}_a$
+    }
+\caption{Upper Confidence Bound (UCB)}
+\end{algorithm}
+\vspace{3mm}
+
+To update $\hat{\mu}_a$, one simply computes the sample mean $\hat{\mu}_a = \frac{\sum R}{N_a(t)}$ where the numerator is the sum of the reward over first $t$ iterations where arm $a$ was selected and the denominator has the same meaning as in Q2. The three algorithms (FTL, Uniform, UCB) represent pure exploitation, pure exploration, and exploration-exploitation trade-off respectively. Code the three algorithms with any programming language you prefer.
+
+\begin{enumerate}[a]
+    \item (30 pts) Consider a Bernoulli bandit with \textbf{two} arms where $\mu_1=0.4, \mu_2=0.6$. Run each algorithm on this bandit with $T=2000$ steps and $500$ repetitions. On the same figure, plot the regret (averaged over $500$ repetitions) vs iterations of the three algorithms. Also incldue the $5$th and $95$th percentile of the regret (out of the $500$ repetitions) vs iterations. Briefly explain the difference in performance among the three algorithms.
+    
+    \item (20 pts) Now consider a Bernoulli bandit with \textbf{nineteen} arms where $\mu_k=0.05k$. That is, $\mu_1 = 0.05, \mu_2 = 0.1, \cdots, \mu_{19} = 0.95$. Make the same plot as in (a). Compare the results with (a) and briefly discuss the difference.
+\end{enumerate}
+
+%Note that, for FTL and UCB, the first $K$ steps are different from those of the scribe notes: we randomly select an arm instead of selecting them sequentially.
+
+
+
+\end{document}
