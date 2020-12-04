@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{float}
+
+\newcommand{\ns}[1]{{\bf \color{blue}NS: #1}}
+
+% Declare Operators
+\newcommand{\weight}{w}
+\newcommand{\bias}{b}
+\newcommand{\slack}{\xi}
+\newcommand{\dual}{v}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\const}{C}
+\newcommand{\margin}{M}
+\newcommand{\kernel}{K}
+\newcommand{\kernelmap}{\phi}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\param}{\gamma}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+
+\usepackage[utf8]{inputenc}
+
+\title{10-715 Fall 2020 Homeworks}
+
+\begin{document}
+
+% \begin{center}
+% {\Large CMU 10-715: Homework 1}\\
+% Perceptron Algorithm on Handwritten Digits \\
+% {\bf DUE: Sept. 12, 2020, 11:59 PM}.\\
+% \end{center}
+
+\begin{center}
+{\Large CMU 10-715: Homework 8}\\
+Graphical Models \\
+{\bf DUE: Dec. 11, 2020, 11:59 PM}.\\
+\end{center}
+
+
+\textbf{\large Instructions}:
+\begin{itemize}
+    \item \textbf{Collaboration policy:} Collaboration on solving the homework is allowed, after you have thought about the problems on your own. It is also OK to get clarification (but not solutions) from books, again after you have thought about the problems on your own. Please don’t search for answers on the web, previous years’ homeworks, etc. (please ask the TAs if you are not sure if you can use a particular reference). There are two requirements: first, cite your collaborators fully and completely (e.g., ``Alice explained to me what is asked in Question 4.3''). Second, write your solution \emph{independently}: close the book and all of your notes, and send collaborators out of the room, so that the solution comes from you only. 
+    \item \textbf{Submitting your work:} Assignments should be submitted as PDFs using Gradescope unless explicitly stated otherwise. Each derivation/proof should be completed on a separate page. Submissions can be handwritten, but should be labeled and clearly legible. Else, submission can be written in LaTeX.
+    
+    \item \textbf{Late days:} For each homework you get three late days to be used only when anything urgent comes up. No points will be deducted for using these late days. We will consider an honor system where we will rely on you to use the late days appropriately.
+    
+
+\end{itemize}
+
+\newpage
+\section{Graphical Models [120 points]}
+
+In this homework you will model a real life problem using Graphical Models. Lets suppose we observe a CMU student during one year and monitor the student's ice cream consumption at a famous ice cream store ``Mimmie's". This store is located next to a popular noodle restaurant ``NoodleHeight", which we know the student frequently visits. In this problem we are interested modeling the student's ice cream consumption. During the experiment we record the following binary variables (nodes):
+
+\begin{itemize}
+    \item The student buys an ice cream at ``Mimmie's" (I)
+    \item Sunny day, whether the day is sunny (S)
+    \item Ice cream discount available at "Mimmie's" (D)
+    \item The student eats at ``NoodleHeight" (N)
+    \item The student wants to eat noodles (C)
+\end{itemize}
+
+\begin{enumerate}[a]
+    \item (40 points) Model the problem with a directed Graphical Model. Show a graph of the network as learnt in class. For modeling you should use your intuition on the relationships between the given features. There may not be a unique correct answer, but avoid obvious non realistic relations (for example, that eating noodles causes sunny days). Please explain existence or absence of edges in your model.
+    
+    \item (40 points) Write the factorized joint distribution between the variables of the problem based on the model you proposed in Part (a).
+    
+    \item (40 points) Suppose we are interested in computing $P(I=1)$, that is, the probability that the student buys an ice cream at ``Mimmie's". If one were to naively marginalize the joint distribution, how many additions are required?  What if you use your factorization based on the proposed model -- can it reduce the number of operations needed, and if so to how much?
+\end{enumerate}
+\end{document}
