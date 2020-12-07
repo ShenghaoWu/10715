@@ -65,13 +65,13 @@ Consider the following online learning algorithm for this binary prediction prob
 
 \vspace{2mm}
 \For{$t\gets 1$ \KwTo $T$}{
-    Let $S^T_p$ and $S^T_n$ be the non-overlapping subsets of $S$ that voted positive and negative respectively on day $t$.
+    Let $S^t_p$ and $S^t_n$ be the non-overlapping subsets of $S$ that voted positive and negative respectively on day $t$.
     \\
     Make a prediction based on majority voting: $\hat{y}_t=-1+2*\mathbbm{1}\{|S^T_p|>|S^T_n|\}$
     \\
     Observe the actual $y_t$
     \\
-    $S \gets S^T_p$ if $y_t=+1$. Otherwise $S \gets S^T_n$
+    $S \gets S^t_p$ if $y_t=+1$. Otherwise $S \gets S^t_n$
     
     
     }
@@ -141,7 +141,7 @@ $A=\{1,2, \cdots, K \}$
    $A\gets A\setminus a$
 }
 \For{$t\gets K+1$ \KwTo $T$}{
-   $a= argmax _{k\in [K]}\hat{\mu}_k\color{red}+\sqrt{\frac{2logt}{N_k(t)}}$ \\
+   $a= argmax _{k\in [K]}\hat{\mu}_k\color{red}+\sqrt{\frac{2logt}{N_k(t-1)}}$ \\
    Pull arm $a$ and receive the reward $R_t$\\
    Update $\hat{\mu}_a$
     }
