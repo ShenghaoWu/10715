@@ -14,7 +14,7 @@ L\left(\theta, \mathcal{S}\right) = \prod^{n}_{i=1} \prod^{K}_{k=1} \pi_{k}(\the
 \end{equation*}
 
 On a separate note, we will now introduce you to a loss that is a popular loss used for classification problems. This is called the cross-entropy loss. The (empirical) cross-entropy for the data $\mathcal{S}$, under the hypothesis class represented by $\theta$, is given by:
-$$E(\theta, \mathcal{S}) = - \sum_{i=1}^n \mathbbm{1}{\{y_{i}=k\}} \text{log}(\pi_{y_i}(\theta,\;\mathbf{x}_{i})).$$
+$$E(\theta, \mathcal{S}) = - \sum^{n}_{i=1} \sum^{K}_{k=1} \mathbbm{1}{\{y_{i}=k\}} \text{log}(\pi_{y_i}(\theta,\;\mathbf{x}_{i})).$$
 
  
 Prove that the parameters $\theta$ that maximize the likelihood also minimize the empirical cross-entropy loss on the training data, that is
