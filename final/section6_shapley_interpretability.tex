@@ -1,0 +1,41 @@
+Let ${\cal X} = \mathbb{R}^{d}$ and ${\cal Y} = \mathbb{R}$. Each $\mathbf{x}_i$ is drawn i.i.d. from some unknown distribution $\mathcal{D}$. Let $h:\mathcal{\cal X}\mapsto \mathbb{R}$ be a model that uses all the $d$ features and we denote $h_S:\mathcal{\cal X}\mapsto \mathbb{R}$ to be a model which uses a subset $S$ of the features. Let $F=\{1,...,d\}$ be the feature indexes.
+
+The Shapley value of a single feature $f \in F$ for a prediction $h(\mathbf{x})$ is denoted by $\phi_{f}(h(\mathbf{x}))$, and it measures the average difference in the predictions with and without this feature $f$.  Formally, the Shapley value of any feature $f$ is defined as:
+
+\[\phi_{f}(h(\mathbf{x})) = \frac{1}{d} \sum_{S \subseteq F \setminus \{f\}} \frac{1}{ \binom{d-1}{|S|} }
+\left(h_{S \cup \{f\}}(\mathbf{x}) - h_{S}(\mathbf{x}) \right). \] 
+
+Note that in the expression above, the summation is over all subsets $S\subseteq F \setminus \{f\}$. 
+
+Let us now consider a concrete machine learning task of fitting a regression model to predict the value of houses, using the following three features: 
+The area of the terrain $x_{1}$, an indicator variable $x_{2}$ to denote if the house has backyard, and an indicator variable $x_{3}$ to denote if its located in a high crime zone.  The model predicts the value of a house $\mathbf{x}$ with $\mathbf{x}=(x_{1},x_{2},x_{3})=(500,True,True)$ and $h(\mathbf{x})=2,300$. Table 1 shows the predicted value for house $\mathbf{x}$ for $h_{S}$ with all possible subsets $S$ of features. 
+
+\begin{table}[htb!]
+  \label{sample-table}
+  \centering
+  \begin{tabular}{lc}
+    model & prediction\\
+    \toprule
+    $h_{\emptyset}(\mathbf{x})$ & 1,740 \\
+    $h_{\{1\}}(\mathbf{x})$   & 2,490 \\
+    $h_{\{2\}}(\mathbf{x})$   & 1,790 \\ 
+    $h_{\{3\}}(\mathbf{x})$ & 1,500	\\
+    $h_{\{1,2\}}(\mathbf{x})$ & 2,540	\\ 
+    $h_{\{2,3\}}(\mathbf{x})$ & 1,550	\\ 
+    $h_{\{1,3\}}(\mathbf{x})$ & 2,250	\\ 
+    $h_{\{1,2,3\}}(\mathbf{x})$ & 2,300	\\ 
+    \bottomrule
+  \end{tabular}
+ \caption{Value predicted by $h$ on each subset of features.}
+  \label{tab:logreg}
+\end{table}
+
+\begin{itemize}[(a)]
+  \item (\textcolor{red}{6 points}) To understand the contribution of each feature to this prediction $h(\mathbf{x})$ compute the Shapley values for the three features $\phi_{1}(h(\mathbf{x})),\; \phi_{2}(h(\mathbf{x})),\; \phi_{3}(h(\mathbf{x}))$ using the expression above and information on Table 1. 
+\end{itemize}
+
+\begin{itemize}[(b)]
+  \item (\textcolor{red}{4 points}) Report the computational complexity of the calculation of a single Shapley value as a function on the number of features $d$. What are the implications?
+\end{itemize}
+
+{\bf Learning goal:} Further understand the concept of Shapley values with a practical simple example. A second goal is to understand the computational complexity of calculating Shapley values and potential limitations.   Finally, note that in order to compute the Shapley value the predictions of $h_S$ and $h_{S \cup \{f\}}$ models are needed for all subsets. While we did a brute force calculation of $\phi_f$ in this toy question, in practice usually only the model with the full set of features $F$ is trained with the training data. Then features are \say{removed} to make a prediction for $\mathbf{x}$ by replacing their values with their mean  for the feature $f$ on the training data, this is denoted by $\bar{x}_{f}$.

@@ -1,0 +1,27 @@
+A scientist, Dr. X, is trying to find the efficacy of a certain medicine on COVID patients in Pittsburgh. On January 1 2021, Dr. X contacts all COVID patients in Pittsburgh and asks them to try out the medicine. 
+
+
+
+It turns out that not every person is interested to take the medicine. A key factor in the participants' decisions is the age of the participant -- younger participants are much more open to taking this medicine. Unfortunately, Dr. X has no way of measuring whether any participant actually complied with the instructions or not.
+
+Note that a crucial aspect of COVID to keep in mind is that the prospect of getting healthy depends on the age -- younger patients are more likely to recover quickly.
+
+Finally, on February 1 2021, Dr. X measures the fraction of participants from each group who became healthy again. 
+
+Questions:
+\begin{itemize}[(a)]
+\item (5 points) Write down a directed graphical model that represents the setting above, that is, which represents the joint distribution regarding the above features (where the distribution is across all people with COVID on Jan 1). The graphical model should have three nodes:
+\begin{enumerate}
+    \item Did the person take the medicine? Call this node ``M''.
+    \item Is the person young? Call this node ``Y''.
+    \item Did the person get healthy on February 1? Call this node ``H''.
+\end{enumerate}
+Draw edges on this graph, and explain your choice of edges (or absence of edges). 
+\end{itemize}
+
+
+\begin{itemize}[(b)]
+\item (5 points) Dr. X finds that 80\% of people who took the medicine became healthy again whereas only 50\% of people who did not take the medicine became healthy. Based on this, Dr. X concludes that the medicine does help in curing COVID. What could go wrong with such a conclusion?
+\end{itemize}
+
+{\bf Learning goal:} To get your hands dirty in modeling a relevant, real-world problem as a graphical model (albeit a toy version of it, since this is an exam). A second goal is to get some experience in thinking critically about various assumptions and ``confounding factors'', rather than just looking at some aggregate numbers in the data, in order to draw conclusions.

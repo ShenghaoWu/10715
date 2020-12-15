@@ -1,0 +1,53 @@
+In a lecture you saw that neural networks are very expressive, for instance, they can represent all functions from $\{-1,1\}^d$ to $\{-1,1\}$. In this question you will show that basic building blocks of circuits -- AND, OR, NOT functions -- can be represented via neural networks. 
+
+\vspace{5mm}
+
+Consider $\mathcal{X} = \{-1,1\}^2$ and $\mathcal{Y}= \{-1,1\}$. (Please take care to note that these values are in $\{-1,1\}$ and not in $\{0,1\}$.) 
+Consider the following three functions: AND, OR and NOT.
+
+\begin{equation}
+\label{and_function}
+\text{AND}(x_{1},x_{2}) 
+= \begin{cases}
+  \,\;\;1  & \text{if } x_{1} > 0 \text{ and } x_{2} > 0\\
+  -1 & \text{if }  x_{1} > 0 \text{ and } x_{2} < 0\\
+  -1 & \text{if }  x_{1} < 0 \text{ and } x_{2} > 0\\
+  -1 & \text{if }  x_{1} < 0 \text{ and } x_{2} < 0\\
+  \end{cases}  
+\end{equation}
+
+\begin{equation}
+\label{or_function}
+\text{OR}(x_{1},x_{2}) 
+= \begin{cases}
+  \,\;\;1  & \text{if } x_{1} > 0 \text{ and } x_{2} > 0\\
+  \,\;\;1 & \text{if }  x_{1} > 0 \text{ and } x_{2} < 0\\
+  \,\;\;1 & \text{if }  x_{1} < 0 \text{ and } x_{2} > 0\\
+  -1 & \text{if }  x_{1} < 0 \text{ and } x_{2} < 0\\
+  \end{cases}  
+\end{equation}
+
+\begin{equation}
+\label{not_function}
+\text{NOT}(x) 
+= \begin{cases}
+  -1  & \text{if } x > 0 \\
+  \,\;\;1 & \text{if }  x< 0
+  \end{cases}
+\end{equation}
+
+Consider a neuron with weights $\mathbf{w}$ and bias $b$. And a its transformation $f: \mathcal{X} \mapsto \mathbb{R}$, with $f(\mathbf{x})=\text{sign}(\mathbf{w}^{\intercal}\mathbf{x}+b)$.
+
+\begin{itemize}[(a)]
+\item (3 points) Show there exists a neuron (that is, there exist weights and bias $\mathbf{w} \in \mathbb{R}, b \in \mathbb{R}$) with the behavior of the NOT function.
+\end{itemize}
+
+\begin{itemize}[(b)]
+\item (3 points) Show there exists a neuron (that is, there exist weights and bias $\mathbf{w} \in \mathbb{R}^2, b \in \mathbb{R}$)  with the behavior of the AND function.
+\end{itemize}
+
+\begin{itemize}[(c)]
+\item (4 points) Show there exists a neuron (that is, there exist weights and bias $\mathbf{w} \in \mathbb{R}^2, b \in \mathbb{R}$)  with the behavior of the OR function.
+\end{itemize}
+
+{\bf Learning goal:} Further understand the expressivity of neural networks in a different manner. We know that AND, OR and NOT are the basic building blocks of digital circuits as they can be used to implement any Boolean function. We take such a ``building blocks'' approach to understand that neural networks are indeed very expressive, that is, they can indeed represent all Boolean functions. Furthermore, this approach can allow us to leverage the massive literature on digital circuits to represent various functions, and also compute guarantees on the number of gates (and hence neural-net parameters) required to express any given function. 

@@ -1,0 +1,124 @@
+\documentclass[letterpaper,12pt,addpoints]{exam}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{environ}
+\usepackage{float}
+\usepackage{dirtytalk}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Declare Operators
+\newcommand{\wv}{\mathbf{w}}
+\newcommand{\bias}{b}
+\newcommand{\xv}{\mathbf{x}}
+\newcommand{\slack}{\xi}
+\newcommand{\const}{C}
+\newcommand{\margin}{M}
+\newcommand{\kernel}{K}
+\newcommand{\kernelmap}{\phi}
+\newcommand{\param}{\gamma}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+
+\newcommand{\ns}[1]{{\color{red}\bf NS: #1}}
+
+\renewcommand\questionlabel{\thequestion)} %replace period with parenthesis
+\renewcommand{\thequestion}{\bfseries\large\arabic{question}}
+
+\newcommand\stoplabeling{\def\makelabel##1{}}
+\newcommand\resumelabeling{\def\makelabel##1{\hss\llap{##1}}}
+\nopointsinmargin
+\pointformat{}
+
+
+% SOLUTION environment
+\NewEnviron{soln}{
+\leavevmode\color{red}\ignorespaces \textbf{Solution} \BODY }{}
+
+\title{10-715 Fall 2020 Homeworks}
+
+\begin{document}
+
+
+\begin{center}
+{\Large CMU 10-715: Final Exam}\\
+{\bf DUE: Dec. 16, 2020, 11:40 AM Eastern Standard Time}.\\
+\end{center}
+
+\textbf{\large Instructions}:
+
+\begin{itemize}
+    \item It is a 24-hour exam. The submission site will close at 11:40 AM, Dec 16.
+
+    \item You can refer to your own notes, the scribe notes, homework solutions, the text book, and lecture videos. You are \textbf{NOT} allowed to use any other resources (e.g., no searching on the Internet).
+    
+    \item You are \textbf{NOT} allowed to discuss the exam with anyone in the duration of the exam. For any questions, please post on Diderot.
+    
+    \item For the programming question(s), you can feel free to use any code you wrote for any of the homeworks. 
+    
+    \item Submit your solutions in a pdf file to Gradescope. Handwritten or typed solutions are both accepted. Start \textbf{each question on a new} page and make sure you select the corresponding page(s) for each question during submission to Gradescope. 
+    
+    \item We recommend taking a brief look at all questions first and then starting to answer them. You may find some questions easier than others. Good luck!
+\end{itemize}
+
+\begin{center}
+\textbf{Distribution of Marks}\\
+\medskip
+\gradetable[v][questions]
+\end{center}
+
+\newpage
+\begin{questions}
+\question[10]
+\section*{Neural Networks and Circuit Building Blocks \textcolor{red}{[10]}} 
+\input{final/section1_neural_building_blocks.tex}
+\addpoints
+
+\newpage
+\question[10]
+\section*{Graphical models, causality, and Dr. X \textcolor{red}{[10]}} 
+\input{final/section2_graphical_models.tex}
+\addpoints
+
+\newpage
+\question[10]
+\section*{Learning with Experts and Power of Two Choices \textcolor{red}{[10]}} 
+\input{final/section3_experts_and_two_choices.tex}
+\addpoints
+
+\newpage
+\question[10]
+\section*{Adversarial Machine Learning \textcolor{red}{[10]}} 
+\input{final/section4_adversarial.tex}
+\addpoints
+
+\newpage
+\question[10]
+\section*{Categorical Log Likelihood and Cross Entropy \textcolor{red}{[10]}}
+\input{final/section5_categorical_cross_entropy.tex}
+\addpoints
+
+\newpage
+\question[10]
+\section*{Shapley Values and ML Interpretability \textcolor{red}{[10]}} 
+\input{final/section6_shapley_interpretability.tex}
+\addpoints
+
+\newpage
+\question[10]
+\section*{A Bayesian approach to Multi-armed Bandits \textcolor{red}{[10]}}
+\input{final/section7_thompson_sampling.tex}
+\addpoints
+
+\end{questions}
+\end{document}

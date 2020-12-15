@@ -1,0 +1,37 @@
+
+Recall the multi-armed bandit (MAP) problem where we have $K$ arms with unknown means $\mu_1,\cdots,\mu_K$. At each iteration, one selects an arm and receives a reward. The goal is to identify the arm with the highest mean as soon as possible, or to minimize the regret. The core of an MAP algorithm is to balance exploitation (sampling from the best arm as much as possible) and exploration (pulling different arms to better identify the best one). For example, the Upper Confidence Bound algorithm discussed in class constructs a confidence interval for each arm to tackle the exploitation-exploration trade-off. 
+
+In this question we will explore a `Bayesian' approach to this trade-off called Thompson sampling. The Thompson sampling algorithm first defines a prior distribution for the mean of each arm. At each iteration, the algorithm draws a sample from the posterior distribution of each arm and pulls the arm whose drawn sample had the maximum value among all arms. It will then update the posterior distribution of the pulled arm with the reward it observed. This way we encode the uncertainty of the estimate of $\mu_k$'s using the prior and posterior distributions which enables us to handle the exploitation-exploration trade-off.
+
+Let's consider a simple case where we have two arms both following a Bernoulli distribution with means $\mu_1=0.4, \mu_2=0.6$. A popular approach is to assume that the prior distribution for each arm follows a $Beta(1,1)$ distribution.\footnote{The pdf of a $Beta(\alpha,\beta)$ random variable is: $f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$ where $x\in [0,1]$, $B(\alpha,\beta)=\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$ and $\Gamma(z)=\int_0^{\infty}x^{z-1}e^{-x}dx$ is a gamma function. $Beta(1,1)$ is equivalent to the uniform distribution on $[0,1]$.} After $t$ iterations, if we observe $S_k$ successes (reward = 1) and $F_k$ failures (reward = 0) for arm $k$, the posterior distribution of arm $k$ is simply $Beta(1+S_k,1+F_k)$.\footnote{If $\mu\sim Beta(\alpha,\beta)$, after observing $n$ samples, $x_1,\cdots,x_n$ from a Bernoulli distribution, the posterior distribution has a closed form: $\mu|x_1,
+\cdots,x_n\sim Beta(\alpha+\sum_ix_i,\beta+n-\sum_ix_i)$. Since the posterior and prior are in the same distribution family (both are Beta), the prior (Beta) is called the `conjugate prior' of the likelihood (Bernoulli). } Hence the Thompson sampling algorithm for Bernoulli bandits is:
+
+\vspace{7mm}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+$S_k=0, F_k=0,  k=1,2$
+
+
+\For{$t\gets 1$ \KwTo $T$}{
+    For $k=1,2$, sample $\lambda_k \sim Beta(1+S_k,1+F_k)$\\
+    Pull the arm $a= argmax _{k\in \{1,2\}}\lambda_k$ and observe a binary reward $r_t$\\
+
+   $S_a=S_a+1$ if $r_t=1$, otherwise  $F_a=F_a+1$ \\
+    }
+\caption{Thompson sampling for Bernoulli bandits}
+\end{algorithm}
+
+\newpage
+
+Consider the Bernoulli bandit described above with $\mu_1=0.4, \mu_2=0.6$. Code the Thompson sampling method and run the algorithm with $T=2500$ iterations and $1000$ repetitions. Plot the regret (averaged over $1000$ repetitions) vs iteration $t$. On the same plot, also include the $5$th and $95$th quantiles of the regret (over $1000$ repetitions) vs iteration $t$. You can use a solid line to represent the mean, and dashed lines/bands to represent the percentiles. 
+
+\textbf{Note}:
+\begin{enumerate}
+    \item Please compute the \textbf{actual} regret with the observed reward. For example, in one repetition, if you pulled arm $1$ and $2$ for the first two iterations and received reward $0$ and $1$, your regret at iteration $2$ should be $0.6*2-(0+1)$. This is consistent with what we studied in class. Feel free to use any built-in functions for sampling from a Beta distribution and plotting quantiles. If you are using python, you may want to look at \textcolor{blue}{numpy.random.beta} and \textcolor{blue}{numpy.quantile}. 
+    \item Please append your code to your pdf submission.
+\end{enumerate}
+ 
+
+\textbf{Learning goal}: To get your hands dirty with a Bayesian perspective for handling exploration-exploitation trade-off in the MAP problem and learn the popular ``Thompson sampling'' algorithm. 
+ \\

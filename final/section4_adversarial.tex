@@ -1,0 +1,20 @@
+Adversarial Machine Learning pertains to adversarially manipulating the algorithm's output. One way to do so is by corrupting the training data. 
+
+Let us consider a toy example. Let ${\cal X} = \mathbb{R}$ and let ${\cal Y} = \{-1,1\}$, the training data is denoted by  $\mathcal{S}=\{(x_{i},y_{i})\}^{n}_{i=1}$. Suppose the algorithm picks the classifier defined by the weight and bias $w \in \mathbb{R}, b \in \mathbb{R}$ that minimizes the square loss over all possible linear classifiers
+\[\hat{w},\hat{b} = \text{argmin}_{w \in \mathbb{R},b \in \mathbb{R}} \sum^{n}_{i=1}(y_i-(wx_i+b))^{2}.
+\]
+
+The decision rule of the classifier $\hat{y}(x)=\hat{f}_{n}(x,\hat{w},\hat{b})$ with
+\[\hat{f}_{n}(x,\hat{w},\hat{b}) = 
+\begin{cases}
+\;\;\,1 & \text{if } \hat{w} x + \hat{b} > 0 \\
+-1 & \text{otherwise}
+\end{cases}
+\]
+
+Now consider the following perfectly separable training data with $n=10$ points: \\
+$\mathcal{S} = \{(-9,1), (-7,1),(-5,1),(-3,1),(-1,1),(1,-1),(3,-1),(5,-1),(7,-1),(9,-1)\}$.
+
+Suppose you are an adversary whose goal is to make the learnt output classify $y=1$ for $x=2$. You can move the ``$x$'' of any \underline{one} of the 10 aforementioned training points to anywhere in ${\cal X}$. Is it possible to achieve this adversary's goal? Please supplement your answer with a proof. You can try to do it analytically or use your computer for a numerical solution.
+
+{\bf Learning goal:} Introducing you to adversarial machine learning via a toy example that you can work out by hand and experience this topic. 

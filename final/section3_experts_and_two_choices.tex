@@ -1,0 +1,18 @@
+The power of two choices is a powerful technique that is useful, in both theory and practice, in many different fields. At a high level it says that if you have to choose one of some $d$ options, then pick two of the options uniformly at random, and then pick the best one of these two.\footnote{For example, this is useful in  scheduling jobs in data centers. Google needs to decide which server it wants to send your request to. Ideally it would like to send it to the server with the lowest load. However, doing so would need querying all servers to find their respective loads. Instead, under the power of two choices strategy, it picks two servers uniformly at random, queries only these two servers for their loads, and then sends your request to the one of these two servers with a lower load.}
+
+In this question we will try out the power of two choices approach in the \say{learning from experts} problem. In particular, consider $d\geq3$ experts, where the problem is to design a no-regret algorithm (in the worst/adversarial case). Consider the following algorithm:
+
+\begin{itemize}
+    \item At the beginning of each day, choose two experts uniformly at random from the set of $d$ experts.
+    \item See which of the two experts has a lower error so far.
+    \item Output the prediction of this expert (for that day).
+\end{itemize}
+
+Show that this algorithm is NOT a no-regret algorithm.
+
+\textbf{Note}:
+\begin{enumerate}
+    \item Assume the algorithm has access to the error of any expert over all the previous days (not just the ones that have been sampled).
+    \item When there is a tie, the algorithm breaks it uniformly at random.
+\end{enumerate}
+\textbf{Learning goal} Intuitively, this algorithm combines two appealing properties: (i) randomness, which we saw in the lecture is necessary for a no-regret algorithm, and (ii) the well-known powerful nature of ``power of two choices''. One learning goal is to give you a negative result, where despite individual pieces of an algorithm being quite useful, they don't yield you the desired result. A second goal is to introduce to the very useful tool of power-of-two-choices (although it wasn't too useful here!).

@@ -1,0 +1,24 @@
+\label{prb:final::prob1}
+
+Let ${\cal X} = \mathbb{R}^{d}$ and ${\cal Y} = \{1,\dots,K\}$. Consider the 
+training data $\mathcal{S} = \{ (\mathbf{x}_{i}, y_{i}) \}^{n}_{i=1}$. Each $\mathbf{x}_i$ is drawn i.i.d. from some unknown distribution $\mathcal{D}$. 
+
+
+Based on the value of $\mathbf{x}_i$, the corresponding label $y_i \in \mathcal{Y}$ is drawn as follows. We consider a hypothesis class ${\cal H}$ where each hypothesis in this class is parameterized by some parameters $\theta \in \Theta$ (for some set $\Theta$). Then under the hypothesis parameterized by some $\theta$, the label is distributed over $\mathcal{Y} = \{1,\ldots,K\}$ via the distribution $p(y = k | \mathbf{x}) = \pi_k(\theta, \mathbf{x})$. Here $\pi_1,\ldots,\pi_K$ are some known functions (but the parameter $\theta$ is unknown).\footnote{This is called a categorical distribution. In words, this distribution is a discrete probability distribution and it can take one of K possible categories, with the probability of each category specified by $\pi_{k}(\theta, x)$ for all $k \in \{1,...,K\}$.}
+
+
+With this context, the likelihood for the data $\mathcal{S}$, under the hypothesis class represented by $\theta$, is given by:
+\begin{equation*}
+\label{multinomial_maximum_likelihood_estimation}
+L\left(\theta, \mathcal{S}\right) = \prod^{n}_{i=1} \prod^{K}_{k=1} \pi_{k}(\theta,\;\mathbf{x}_{i})^{\mathbbm{1}{\{y_{i}=k}\}} .
+\end{equation*}
+
+On a separate note, we will now introduce you to a loss that is a popular loss used for classification problems. This is called the cross-entropy loss. The (empirical) cross-entropy for the data $\mathcal{S}$, under the hypothesis class represented by $\theta$, is given by:
+$$E(\theta, \mathcal{S}) = - \sum_{i=1}^n \mathbbm{1}{\{y_{i}=k\}} \text{log}(\pi_{y_i}(\theta,\;\mathbf{x}_{i})).$$
+
+ 
+Prove that the parameters $\theta$ that maximize the likelihood also minimize the empirical cross-entropy loss on the training data, that is
+$$\text{argmax}_\theta L(\theta, \mathcal{S}) = \text{argmin}_\theta E(\theta, \mathcal{S})$$
+
+
+\textbf{Learning goal} Introduce the concept of cross-entropy loss, one of the most popular losses used for classification problems in machine learning. Students will find the equivalence between this loss and the likelihood. A second learning goal is to get some idea about multi-class classification since in the lecture we largely focused on binary classification.
